@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173c2b">
+  <title>Guardianes del Bosque | ODS 15</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true">🌿</div>
+      <div class="brand-copy">
+        <p class="eyebrow">AGENDA 2030 · OBJETIVO 15</p>
+        <h1>Guardianes del Bosque</h1>
+        <p class="subtitle">Cuida, restaura y protege un pequeño ecosistema.</p>
+      </div>
+      <div class="ods-badge"><span>ODS</span><strong>15</strong><small>Vida de<br>ecosistemas terrestres</small></div>
+    </header>
+
+    <section class="intro-strip">
+      <span class="pulse-dot"></span>
+      <p>El bosque está vivo y necesita de ti. Cada decisión ayuda a recuperar su equilibrio.</p>
+    </section>
+
+    <section class="game-layout">
+      <div class="world-panel panel">
+        <div class="world-heading">
+          <div><p class="eyebrow">TU RESERVA NATURAL</p><h2>Un bosque en tus manos</h2></div>
+          <div class="day-chip"><span aria-hidden="true">☀</span> Día <b id="day-count">1</b></div>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="forest-canvas" aria-label="Bosque interactivo. Selecciona una herramienta y haz clic en el terreno o en una persona que esté dañando el ecosistema."></canvas>
+          <div class="world-toast" id="world-toast" role="status" aria-live="polite">¡Bienvenido, guardián!</div>
+          <div class="incident-banner hidden" id="incident-banner" role="alert">
+            <strong>¡DETÉN ESTA ACCIÓN!</strong>
+            <span id="incident-text">Una persona está dañando el bosque.</span>
+          </div>
+          <div class="world-hint" id="world-hint">Elige una herramienta y haz clic en el bosque.</div>
+        </div>
+        <div class="tool-row" aria-label="Herramientas del bosque">
+          <button class="tool-button active" data-tool="plant" title="Plantar un árbol"><span>🌳</span><b>Plantar</b><small>2 semillas</small></button>
+          <button class="tool-button" data-tool="water" title="Regar una zona"><span>💧</span><b>Regar</b><small>1 agua</small></button>
+          <button class="tool-button" data-tool="flower" title="Sembrar flores"><span>🌼</span><b>Flores</b><small>1 semilla</small></button>
+          <button class="tool-button" data-tool="clean" title="Recoger residuos"><span>🧹</span><b>Limpiar</b><small>Retira basura</small></button>
+          <button class="tool-button" data-tool="intervene" title="Detener a una persona"><span>✋</span><b>Intervenir</b><small>Protege el bosque</small></button>
+          <button class="tool-button" data-tool="restore" title="Restaurar la salud del bosque"><span>✨</span><b>Restaurar</b><small>3 puntos</small></button>
+        </div>
+      </div>
+
+      <aside class="side-column">
+        <section class="panel stats-panel">
+          <div class="section-title"><div><p class="eyebrow">ESTADO DEL ECOSISTEMA</p><h2>Salud del bosque</h2></div><span class="status-leaf">🍃</span></div>
+          <div class="health-number"><strong id="health-value">70</strong><span>%</span><em id="health-label">En recuperación</em></div>
+          <div class="progress-track"><div id="health-bar" class="progress-fill" style="width:70%"></div></div>
+          <div class="resource-grid">
+            <div class="resource-card"><span>🌰</span><div><small>Semillas</small><strong id="seed-value">12</strong></div></div>
+            <div class="resource-card"><span>💧</span><div><small>Agua</small><strong id="water-value">8</strong></div></div>
+            <div class="resource-card"><span>⭐</span><div><small>Puntos</small><strong id="score-value">0</strong></div></div>
+          </div>
+          <div class="mini-stats">
+            <div><span>🌳</span><span>Árboles</span><b id="tree-count">0</b></div>
+            <div><span>🌸</span><span>Flores</span><b id="flower-count">0</b></div>
+            <div><span>🦊</span><span>Animales</span><b id="animal-count">4</b></div>
+            <div><span>🗑️</span><span>Residuos</span><b id="litter-count">0</b></div>
+          </div>
+        </section>
+
+        <section class="panel missions-panel">
+          <div class="section-title"><div><p class="eyebrow">TU COMPROMISO</p><h2>Misiones</h2></div><span class="mission-icon">✦</span></div>
+          <div class="mission" data-mission="trees"><div class="mission-top"><span>🌱 Plantar árboles</span><b id="trees-progress">0/10</b></div><div class="progress-track small"><div id="trees-bar" class="progress-fill" style="width:0%"></div></div></div>
+          <div class="mission" data-mission="incidents"><div class="mission-top"><span>🛡️ Resolver incidentes</span><b id="incidents-progress">0/4</b></div><div class="progress-track small"><div id="incidents-bar" class="progress-fill" style="width:0%"></div></div></div>
+          <div class="mission" data-mission="health"><div class="mission-top"><span>💚 Alcanzar salud</span><b id="health-progress">70/90%</b></div><div class="progress-track small"><div id="health-mission-bar" class="progress-fill" style="width:77%"></div></div></div>
+          <div class="mission" data-mission="time"><div class="mission-top"><span>⏳ Cuidar el bosque</span><b id="time-progress">0:00/2:00</b></div><div class="progress-track small"><div id="time-bar" class="progress-fill" style="width:0%"></div></div></div>
+          <p class="mission-note">Completa las cuatro misiones para convertirte en guardián del bosque.</p>
+        </section>
+
+        <section class="panel tip-panel">
+          <span class="tip-symbol">“</span>
+          <p id="eco-tip">La biodiversidad hace que los ecosistemas sean más resistentes y saludables.</p>
+          <small>CONSEJO DEL BOSQUE</small>
+        </section>
+      </aside>
+    </section>
+    <footer class="footer-note"><span>✦</span> Una experiencia artística e interactiva inspirada en el ODS 15 de la ONU. <span>✦</span></footer>
+  </main>
+
+  <div class="modal-backdrop hidden" id="end-modal" role="dialog" aria-modal="true" aria-labelledby="end-title">
+    <div class="end-card">
+      <div class="end-illustration" aria-hidden="true">🌳🦋🌼</div>
+      <p class="eyebrow">MISIÓN COMPLETADA</p>
+      <h2 id="end-title">¡El bosque vuelve a respirar!</h2>
+      <p class="end-message">Cada árbol, cada animal y cada acción cuentan. Proteger la vida terrestre es una responsabilidad compartida: nuestras decisiones de hoy pueden conservar la naturaleza para las generaciones futuras.</p>
+      <div class="final-score">Puntuación final <strong id="final-score">0</strong></div>
+      <button id="restart-button" class="primary-button">Volver a jugar <span>↻</span></button>
+    </div>
+  </div>
+  <div class="sr-only" id="live-region" aria-live="polite"></div>
+</body>
+</html>
